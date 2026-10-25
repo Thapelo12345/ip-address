@@ -1,0 +1,21 @@
+@import url('https://fonts.google.com/specimen/Rubik');
+@import "tailwindcss";
+
+body{
+  @apply w-screen h-screen m-0 p-0 overflow-x-hidden;
+  font-family: 'Rubik', sans-serif;
+  
+}
+
+h1{font-weight: 700;}
+
+label{
+  @apply text-black/30 text-[10px];
+}
+
+h3{
+  @apply text-2xl font-bold;
+  font-weight: 700;
+}
+
+#map { height: 180px; }
