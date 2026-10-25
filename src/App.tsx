@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import CellInfo from "./components/cellInfo";
 import Map from "./components/map";
+import arrowIcon from "./assets/icon-arrow.svg";
 import "./App.css";
 
 function App() {
@@ -58,7 +59,7 @@ function App() {
             onClick={() => GetLocation(ipAddress)}
           >
             <div className="block bg-black p-4 mb-2 m-0 rounded-tr-2xl rounded-br-2xl">
-              <img src="../src/assets/icon-arrow.svg" alt="arrow-icon" />
+              <img src={arrowIcon} alt="arrow-icon" />
             </div>
           </button>
         </div>
