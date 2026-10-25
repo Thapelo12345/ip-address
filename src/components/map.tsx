@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
+import markerIcon from "../assets/icon-location.svg?url";
+import L from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -6,6 +8,13 @@ type PROPS = {
   Latitude: number;
   Longitude: number;
 };
+
+const customSvgIcon = L.icon({
+  iconUrl: markerIcon, // Now it is correctly recognized as a string
+  iconSize: [24, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32],
+});
 
 function FollowMarker({ position }: { position: [number, number] }) {
   const map = useMap();
@@ -39,7 +48,7 @@ export default function Map({ Latitude, Longitude }: PROPS) {
         />
         
         {/* Adds a point marker at our coordinates */}
-        <Marker  position={position} >
+        <Marker  position={position} icon={customSvgIcon} >
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
