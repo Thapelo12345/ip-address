@@ -1,13 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
+import arrowIcon from "./assets/icon-arrow.svg?url";
 import CellInfo from "./components/cellInfo";
 import Map from "./components/map";
-import arrowIcon from "./assets/icon-arrow.svg";
 import "./App.css";
 
 function App() {
   const ipAddressRef = useRef("192.212.174.101");
-  const latitudeRef = useRef(0.0)
-  const longitudeRef = useRef(0.0)
+  const latitudeRef = useRef(0.0);
+  const longitudeRef = useRef(0.0);
 
   const [ipAddress, setIpAddress] = useState("");
   const [location, setLocation] = useState("Brooklyn, NY 10001");
@@ -16,22 +16,21 @@ function App() {
 
   async function GetLocation(ip: string) {
     const fetchResponse = await fetch(
-    `https://geo.ipify.org/api/v2/country,city?apiKey=${import.meta.env.VITE_IP_Geolocation_API}&ipAddress=${ip}`,
-    { method: "GET" },
+      `https://geo.ipify.org/api/v2/country,city?apiKey=${import.meta.env.VITE_IP_Geolocation_API}&ipAddress=${ip}`,
+      { method: "GET" },
     );
 
     const ipifyData = await fetchResponse.json();
-    ipAddressRef.current = ipAddress
+    ipAddressRef.current = ipAddress;
 
-    const arear = ipifyData.location
-    setLocation(arear.region + ", "+ arear.city + " " + arear.postalCode)
-    setTime(arear.timezone)
+    const arear = ipifyData.location;
+    setLocation(arear.region + ", " + arear.city + " " + arear.postalCode);
+    setTime(arear.timezone);
 
-    latitudeRef.current = arear.lat
-    longitudeRef.current = arear.lng
+    latitudeRef.current = arear.lat;
+    longitudeRef.current = arear.lng;
 
-    setIsp(ipifyData.isp)
-
+    setIsp(ipifyData.isp);
   } //end of get location function
 
   return (
@@ -39,7 +38,8 @@ function App() {
       <section
         className="relative z-10 m-0 flex flex-col items-center h-70 py-5"
         style={{
-          backgroundImage: `url("../public/images/pattern-bg-desktop.png")`,
+          // backgroundImage: `url("../public/images/pattern-bg-desktop.png")`,
+          backgroundImage: `url("/ip-address/images/pattern-bg-desktop.png")`,
         }}
       >
         <h1 className="text-center mt-10 md:mt-0 text-white text-2xl mb-4">
@@ -59,6 +59,7 @@ function App() {
             onClick={() => GetLocation(ipAddress)}
           >
             <div className="block bg-black p-4 mb-2 m-0 rounded-tr-2xl rounded-br-2xl">
+              {/* <img src="../src/assets/icon-arrow.svg" alt="arrow-icon" /> */}
               <img src={arrowIcon} alt="arrow-icon" />
             </div>
           </button>
@@ -73,7 +74,7 @@ function App() {
       </section>
 
       <section className="w-full h-screen bg-blue-200">
-      <Map Latitude={latitudeRef.current} Longitude={longitudeRef.current}/>
+        <Map Latitude={latitudeRef.current} Longitude={longitudeRef.current} />
       </section>
     </div>
   );
