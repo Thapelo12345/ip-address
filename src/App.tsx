@@ -15,10 +15,14 @@ function App() {
   const [isp, setIsp] = useState("SpaceX Starlink");
 
   async function GetLocation(ip: string) {
+
+    try{
     const fetchResponse = await fetch(
       `https://geo.ipify.org/api/v2/country,city?apiKey=${import.meta.env.VITE_IP_Geolocation_API}&ipAddress=${ip}`,
       { method: "GET" },
     );
+
+    if(!fetchResponse.ok) throw new Error("Failed to connect Server!.")
 
     const ipifyData = await fetchResponse.json();
     ipAddressRef.current = ipAddress;
@@ -31,6 +35,11 @@ function App() {
     longitudeRef.current = arear.lng;
 
     setIsp(ipifyData.isp);
+  }catch(err: unknown){
+    const errMessage = err instanceof Error ? err.message : "unknown server Error!."
+    alert(errMessage)
+  }
+
   } //end of get location function
 
   return (
