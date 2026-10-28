@@ -62,18 +62,22 @@ function App() {
       );
 
       if (!getUserLocation.ok)
-      throw new Error("Failed to connect with server!.");
+        throw new Error("Failed to connect with location server.");
       const firstAddress = await getUserLocation.json();
 
-      if (!firstAddress.ip) throw new Error("Fail to get user Address!.");
+      if (!firstAddress.ip) throw new Error("Failed to get the user's IP address.");
 
-      const finalRequest = await fetch(`http://ipwho.is/${firstAddress.ip}`, {
+      const finalRequest = await fetch(`https://ipwho.is/${encodeURIComponent(firstAddress.ip)}`, {
         method: "GET",
       });
 
-      if (!finalRequest.ok) throw new Error("Failed to second Location!.");
+      if (!finalRequest.ok)
+        throw new Error("Failed to connect with the geolocation service.");
 
       const defaultData = await finalRequest.json();
+
+      if (defaultData.success === false)
+        throw new Error(defaultData.message || "Failed to get geolocation data.");
 
       ipAddressRef.current = defaultData.ip;
       latitudeRef.current = defaultData.latitude;
